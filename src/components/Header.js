@@ -16,8 +16,19 @@ import { useCartContext } from "../context/Cartcontext";
 const Header = () => {
   const {
     cartState: { cart },
+    cartDispatch: dispatch,
+    productState: { searchQuery },
+    productDispatch
   } = useCartContext();
 
+  //console.log("Search Value", searchQuery)
+
+  const searchHandler = (event) => {
+    productDispatch({
+      type: "FILTER_BY_SEARCH",
+      payload: event.target.value
+    })
+  }
   return (
     <Navbar bg="dark" variant="dark" style={{ height: 80 }}>
       <Container>
@@ -32,6 +43,8 @@ const Header = () => {
             placeholder="Search a product..."
             className="m-auto"
             aria-label="Search"
+            value={searchQuery}
+            onChange={searchHandler}
           />
         </Navbar.Text>
         <Nav>
@@ -40,7 +53,10 @@ const Header = () => {
               <FaShoppingCart color="white" fontSize="25px" />
               <Badge>{cart.length}</Badge>
             </Dropdown.Toggle>
-            <Dropdown.Menu  className="dropdown-menu dropdown-menu-right" style={{ minWidth: 370 }}>
+            <Dropdown.Menu
+              className="dropdown-menu dropdown-menu-right"
+              style={{ minWidth: 370 }}
+            >
               {cart.length > 0 ? (
                 <>
                   {cart.map((prod) => (
@@ -57,19 +73,26 @@ const Header = () => {
                       <AiFillDelete
                         fontSize="20px"
                         style={{ cursor: "pointer" }}
+                        onClick={(e) =>
+                          dispatch({
+                            type: "REMOVE_FROM_CART",
+                            payload: prod,
+                          })
+                        }
                       />
                     </span>
                   ))}
-                    <Link to="/cart">
+                  <Link to="/cart">
                     <Button style={{ width: "95%", margin: "0 10px" }}>
                       Go To Cart
                     </Button>
                   </Link>
                 </>
               ) : (
-                <><span style={{ padding: 10 }}>Cart is Empty!</span></>
+                <>
+                  <span style={{ padding: 10 }}>Cart is Empty!</span>
+                </>
               )}
-              
             </Dropdown.Menu>
           </Dropdown>
         </Nav>

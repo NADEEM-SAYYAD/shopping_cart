@@ -13,10 +13,6 @@ const SingleProduct = ({ product: prod }) => {
     return cart.some((p) => p.id === prod.id);
   }, [cart, prod]);
 
-  console.log(isItemExistInCart)
-  console.log("All Items", products);
-  console.log("My Cart", cart);
-
   const addProductHandler = (product) => {
     dispatch({
       type: "ADD_TO_CART",
@@ -29,7 +25,7 @@ const SingleProduct = ({ product: prod }) => {
       payload: product,
     });
   };
-
+//prod.image
   return (
     <div className="products">
       <Card>
@@ -43,6 +39,7 @@ const SingleProduct = ({ product: prod }) => {
             ) : (
               <div>4 days delivery</div>
             )}
+            <div>In Stocks : {prod.inStock}</div>
             <div><Rating rating={prod.ratings} /></div>
             {isItemExistInCart ? (
               <Button
