@@ -2,15 +2,16 @@ import React, { useMemo } from "react";
 import { useCartContext } from "../context/Cartcontext";
 import SingleProduct from "./SingleProduct";
 import Filters from "./Filters";
+import NoItemsfound from "./NoItemsfound";
 
 const Home = () => {
   const {
     cartState: { products },
-    productState: { price, stockStatus, deliveryStatus, rating, searchQuery }
+    productState: { price, stockStatus, deliveryStatus, searchQuery }
   } = useCartContext();
 
+  console.log("My Products items", products);
   const getFilersProductData = useMemo(() => {
-    console.log("Searched value", searchQuery)
     let filterdData = products;
     if (deliveryStatus) {
       filterdData = filterdData.filter(prod => prod.fastDelivery)
@@ -28,16 +29,18 @@ const Home = () => {
       filterdData = filterdData.filter(prod => prod.name.includes(searchQuery))
     }
     return filterdData
-  })
+  }, [products, price, stockStatus, deliveryStatus, searchQuery])
 
-
+  console.log(getFilersProductData)
   return (
     <div className="home">
       <Filters />
       <div className="productContainer">
-        {getFilersProductData.map((product) => (
-          <SingleProduct key={product.id} product={product} />
-        ))}
+        {
+          getFilersProductData.length ? getFilersProductData.map((product) => (
+            <SingleProduct key={product.id} product={product} />
+          )) : <NoItemsfound />
+        }
       </div>
     </div>
   );

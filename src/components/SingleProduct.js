@@ -5,7 +5,7 @@ import { useCartContext } from "../context/Cartcontext";
 
 const SingleProduct = ({ product: prod }) => {
   const {
-    cartState: { cart, products },
+    cartState: { cart },
     cartDispatch : dispatch,
   } = useCartContext();
 
