@@ -20,9 +20,6 @@ const Header = () => {
     productState: { searchQuery },
     productDispatch
   } = useCartContext();
-
-  //console.log("Search Value", searchQuery)
-
   const searchHandler = (event) => {
     productDispatch({
       type: "FILTER_BY_SEARCH",

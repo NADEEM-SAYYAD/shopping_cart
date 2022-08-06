@@ -1,5 +1,3 @@
-import { act } from "react-dom/test-utils";
-
 export const SORT_BY_PRICE = "SORT_BY_PRICE";
 export const FILTER_BY_STOCK = "FILTER_BY_STOCK";
 export const FILTER_BY_DELIVERY = "FILTER_BY_DELIVERY";
