@@ -1,6 +1,6 @@
 import React from "react";
 import { useCartContext } from "../context/Cartcontext";
-import { Col, Image, ListGroup, Row } from "react-bootstrap";
+import { Col, Image, ListGroup, Row ,Button} from "react-bootstrap";
 import Rating from "./Rating";
 import { AiFillDelete } from "react-icons/ai";
 import ItemsQantity from "./ItemsQantity";
@@ -17,6 +17,8 @@ const Cart = () => {
       payload: delItem
     })
   }
+
+  const total = cart.reduce((acc,cur)=> acc + Number(cur.price) * cur.qty ,0);
   return (
     <div className="home">
       <div className="productContainer">
@@ -32,7 +34,7 @@ const Cart = () => {
                 </Col>
                 <Col md={2}>₹ {prod.price}</Col>
                 <Col md={2}><Rating rating={prod.ratings} /></Col>
-                <Col md={2}><ItemsQantity qantity={prod.inStock} /></Col>
+                <Col md={2}><ItemsQantity qty={prod.inStock} pid={prod.id}/></Col>
 
                 <Col md={2}>
                   <AiFillDelete
@@ -45,6 +47,13 @@ const Cart = () => {
             </ListGroup.Item>
           ))}
         </ListGroup>
+      </div>
+      <div className="filters summary">
+        <span className="title">Subtotal ({cart.length}) items</span>
+        <span style={{ fontWeight: 700, fontSize: 20 }}>Total: ₹ {total}</span>
+        <Button type="button" disabled={cart.length === 0}>
+          Proceed to Checkout
+        </Button>
       </div>
     </div>
   );

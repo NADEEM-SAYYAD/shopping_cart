@@ -41,18 +41,20 @@ const SingleProduct = ({ product: prod }) => {
             )}
             <div>In Stocks : {prod.inStock}</div>
             <div><Rating rating={prod.ratings} /></div>
-            {isItemExistInCart ? (
-              <Button
-                variant="danger"
-                onClick={(e) => removeProductHandler(prod)}
-              >
-                Remove from Cart
-              </Button>
-            ) : (
-              <Button onClick={(e) => addProductHandler(prod)}>
-                Add to Cart
-              </Button>
-            )}
+            {
+              !prod.inStock  ?  <Button variant="warning">Item not in stock</Button> : (isItemExistInCart ? (
+                <Button
+                  variant="danger"
+                  onClick={(e) => removeProductHandler(prod)}
+                >
+                  Remove from Cart
+                </Button>
+              ) : (
+                <Button onClick={(e) => addProductHandler(prod)}>
+                  Add to Cart
+                </Button>
+              ))
+            }
           </Card.Subtitle>
         </Card.Body>
       </Card>
