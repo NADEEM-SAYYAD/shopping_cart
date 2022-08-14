@@ -7,17 +7,20 @@ export const cartReducer = (state, action) => {
     case ADD_TO_CART:
       return {
         ...state,
-        cart :[...state.cart,action.payload]
+        cart: [...state.cart, { ...action.payload, qty: 1 }]
       };
     case REMOVE_FROM_CART:
-      let filterCart = state.cart.filter(item=>item.id !== action.payload.id)
+      let filterCart = state.cart.filter(item => item.id !== action.payload.id)
       return {
         ...state,
-        cart : filterCart
+        cart: filterCart
       };
     case CHANGE_CART_QTY:
+      const { qty, pid } = action.payload;
+      let latestCart = state.cart.map(item => item.id == pid ? { ...item, qty: Number(qty) } : item)
       return {
         ...state,
+        cart: latestCart
       };
     default:
       return {
